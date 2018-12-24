@@ -86,18 +86,26 @@ def simrank(w, s, i_):
 def output(s, count, tStart, tEnd, ite):
     print('Sim rank')
     print(s)
+    print("")
     print('count:',count,'   executing simrank function time:','{:08e}'.format( - tStart + tEnd ),'   simrank function iteration counts:',ite)
+    print("-----------------------------------------------------------------")
 
-    
-    
-if __name__ == "__main__":
-    filename = 'hw3dataset/graph_5.txt'
-    filename2 = 'hw3dataset/data.ntrans_0.1.nitems_0.1.1'
-    p, p_, count = read_file(filename)
-    #p, p_, count = read_outfile(filename2)
-    #p, p_, count = read_outfile_bi(filename2)
+def execute_(p, p_, count ):
     w, s, i_ = create_matrix(p, p_, count)
     tStart = time.time()
     s, ite = simrank(w, s, i_)
     tEnd = time.time()
     output(s, count, tStart, tEnd, ite)
+    
+if __name__ == "__main__":
+    filename = 'hw3dataset/graph_5.txt'
+    filename2 = 'hw3dataset/data.ntrans_0.1.nitems_0.1.1'
+    for i in range(5):
+        print('graph',i+1)
+        print("")
+        filename = 'hw3dataset/graph_'+str(i+1)+'.txt'
+        p, p_, count = read_file(filename)
+        execute_(p, p_, count )
+        print("")
+
+

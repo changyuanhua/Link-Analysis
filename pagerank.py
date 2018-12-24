@@ -100,16 +100,42 @@ def output(r, count, tStart, tEnd, ite):
         print('{:04d}'.format(r_sort[i][0]),': ','{:08e}'.format(r_sort[i][1]))
     plt.bar(num, r, width = 0.6, alpha =0.3)
     plt.show()
+    print("")
     print('count:',count,'   executing hit function time:','{:08e}'.format( - tStart + tEnd ),'   hit function iteration counts:',ite)
-    
-if __name__ == "__main__":
-    filename = 'hw3dataset/graph_add3.txt'
-    filename2 = 'hw3dataset/data.ntrans_0.1.nitems_0.1.1'
-    p, p_, count = read_file(filename)
-    #p, p_, count = read_outfile(filename2)
-    #p, p_, count = read_outfile_bi(filename2)
+    print("-----------------------------------------------------------------")
+
+def execute_(p, p_, count ):
     a, x = create_matrix(p, p_, count)
     tStart = time.time()
     r, ite = pagerank(a, x)
     tEnd = time.time()
     output(r, count, tStart, tEnd, ite)
+    
+if __name__ == "__main__":
+    filename = 'hw3dataset/graph_add3.txt'
+    filename2 = 'hw3dataset/data.ntrans_0.1.nitems_0.1.1'
+    for i in range(6):
+        print('graph',i+1)
+        print("")
+        filename = 'hw3dataset/graph_'+str(i+1)+'.txt'
+        p, p_, count = read_file(filename)
+        execute_(p, p_, count )
+        print("")
+    for i in range(3):
+        print('graph_add',i+1)
+        print("")
+        filename = 'hw3dataset/graph_add'+str(i+1)+'.txt'
+        p, p_, count = read_file(filename)
+        execute_(p, p_, count ) 
+        print("")
+
+    print('direct')
+    print("")
+    p, p_, count = read_outfile(filename2)
+    execute_(p, p_, count )
+    print("")
+
+    print('bi-direct')
+    print("")
+    p, p_, count = read_outfile_bi(filename2)
+    execute_(p, p_, count )

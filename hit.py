@@ -101,16 +101,42 @@ def output(a_, h_, count, tStart, tEnd, ite):
     plt.bar(num+0.1, h_, width = 0.2, alpha =0.3, label='Hub')
     plt.legend(loc='upper right')
     plt.show()
+    print("")
     print('count:',count,'   executing hit function time:','{:08e}'.format( - tStart + tEnd ),'   hit function iteration counts:',ite)
-    
-if __name__ == "__main__":
-    filename = 'hw3dataset/graph_1.txt'
-    filename2 = 'hw3dataset/data.ntrans_0.1.nitems_0.1.1'
-    #p, p_, count = read_file(filename)
-    #p, p_, count = read_outfile(filename2)
-    p, p_, count = read_outfile_bi(filename2)
+    print("-----------------------------------------------------------------")
+
+def execute_(p, p_, count ):
     a, h = create_matrix(p, p_, count)
     tStart = time.time()
     a_, h_, ite = hit(a, h)
     tEnd = time.time()
     output(a_, h_, count, tStart, tEnd, ite)
+
+if __name__ == "__main__":
+    filename = 'hw3dataset/graph_1.txt'
+    filename2 = 'hw3dataset/data.ntrans_0.1.nitems_0.1.1'
+    for i in range(6):
+        print('graph',i+1)
+        print("")
+        filename = 'hw3dataset/graph_'+str(i+1)+'.txt'
+        p, p_, count = read_file(filename)
+        execute_(p, p_, count )
+        print("")
+    for i in range(3):
+        print('graph_add',i+1)
+        print("")
+        filename = 'hw3dataset/graph_add'+str(i+1)+'.txt'
+        p, p_, count = read_file(filename)
+        execute_(p, p_, count ) 
+        print("")
+
+    print('direct')
+    print("")
+    p, p_, count = read_outfile(filename2)
+    execute_(p, p_, count )
+    print("")
+
+    print('bi-direct')
+    print("")
+    p, p_, count = read_outfile_bi(filename2)
+    execute_(p, p_, count )
